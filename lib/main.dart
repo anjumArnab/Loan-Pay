@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:loan_pay/screens/loan_pay_screen.dart';
+import 'package:loan_pay/services/loan_service.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  await LoanService.init();
+
   runApp(const LoanPayApp());
 }
 
