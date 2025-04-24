@@ -6,6 +6,7 @@ class InfoContainer extends StatelessWidget {
   final TextStyle? titleStyle;
   final TextStyle? subtitleStyle;
   final double spacing;
+  final VoidCallback? onDelete;
 
   const InfoContainer({
     super.key,
@@ -14,6 +15,7 @@ class InfoContainer extends StatelessWidget {
     this.titleStyle,
     this.subtitleStyle,
     this.spacing = 4,
+    this.onDelete,
   });
 
   @override
@@ -25,20 +27,35 @@ class InfoContainer extends StatelessWidget {
         border: Border.all(color: Colors.black, width: 1.5),
         borderRadius: BorderRadius.circular(5),
       ),
-      child: Column(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: titleStyle ?? const TextStyle(fontSize: 14),
-          ),
-          if (subtitle != null) ...[
-            SizedBox(height: spacing),
-            Text(
-              subtitle!,
-              style: subtitleStyle ?? const TextStyle(fontSize: 14),
+          // Content Section
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: titleStyle ?? const TextStyle(fontSize: 14),
+                ),
+                if (subtitle != null) ...[
+                  SizedBox(height: spacing),
+                  Text(
+                    subtitle!,
+                    style: subtitleStyle ?? const TextStyle(fontSize: 14),
+                  ),
+                ],
+              ],
             ),
-          ],
+          ),
+          // Delete Button
+          if (onDelete != null)
+            IconButton(
+              icon: const Icon(Icons.delete, color: Colors.red),
+              onPressed: onDelete,
+              tooltip: 'Delete',
+            ),
         ],
       ),
     );
